@@ -71,8 +71,57 @@ nav.desktop ul li a {
     display: block;
 }
 
+.hamburger-menu {
+    display: none;
+    font-size: 2rem;
+    color: var(--cor-texto-claro);
+    cursor: pointer;
+    z-index: 1001; 
+}
+
 nav.mobile {
     display: none;
+    position: fixed;
+    top: -500px; 
+    left: 0;
+    width: 100%;
+    height: auto;
+    background-color: var(--cor-fundo);
+    transition: top 0.4s ease-in-out; 
+    z-index: 1000;
+}
+
+nav.mobile.aberto {
+    top: 100px;
+}
+
+nav.mobile ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+nav.mobile ul li {
+    width: 100%;
+    text-align: center;
+    background-color: var(--cor-secundaria); 
+    border-bottom: 1px solid var(--cor-borda-divisor); 
+}
+
+
+nav.mobile ul li.ativo {
+    background-color: var(--cor-primaria);
+}
+
+nav.mobile ul li a {
+    text-decoration: none;
+    color: var(--cor-texto-claro);
+    font-size: 1.5rem;
+    display: block; 
+    padding: 20px 0; 
 }
 
 nav.desktop ul li.ativo {
@@ -403,9 +452,20 @@ main.main-centralizado {
 /*   4. Responsividade (Media Queries)   */
 
 @media screen and (max-width: 768px) {
+    @media screen and (max-width: 768px) {
     nav.desktop {
         display: none;
     }
+
+    .hamburger-menu {
+        display: block; 
+    }
+
+    nav.mobile {
+        display: flex; 
+    }
+    
+}
     
     main, main.sobre-container, .contato-container {
         flex-direction: column;
@@ -438,5 +498,10 @@ main.main-centralizado {
     
     .nav-btn {
         top: 35%;
+    }
+
+    .form-container button {
+        margin-left: auto;
+        margin-right: auto;
     }
 }

@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 1. LÓGICA DO MENU ATIVO (Roda em todas as páginas)
   const paginaAtual = window.location.pathname;
-  const linksDoMenu = document.querySelectorAll("nav.desktop ul li a");
+  const linksDoMenu = document.querySelectorAll("nav.desktop ul li a, nav.mobile ul li a");
 
   linksDoMenu.forEach(link => {
     // Corrige a lógica para funcionar com 'index.html' e o caminho raiz '/'
@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", () => {
       let currentProjectIndex = 0;
 
       function updateButtons() {
-        const itemsPerPage = 3; // Defina quantos itens são visíveis por vez
+        const itemsPerPage = 3; 
         prevButton.disabled = currentProjectIndex === 0;
         nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
       }
@@ -93,6 +93,24 @@ document.addEventListener("DOMContentLoaded", () => {
       
       updateButtons();
     }
+  }
+
+  // 4. LÓGICA DO MENU HAMBÚRGUER
+  const hamburger = document.querySelector('.hamburger-menu');
+  const navMobile = document.querySelector('nav.mobile');
+  const navMobileLinks = document.querySelectorAll('nav.mobile ul li a');
+
+  if (hamburger && navMobile) {
+    hamburger.addEventListener('click', () => {
+      navMobile.classList.toggle('aberto');
+    });
+
+    
+    navMobileLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMobile.classList.remove('aberto');
+        });
+    });
   }
 
 });

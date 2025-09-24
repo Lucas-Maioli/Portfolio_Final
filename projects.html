@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="Lucas Paulista Maioli" />
+    <meta
+      name="description"
+      content="Explore os projetos desenvolvidos por Lucas Maioli."
+    />
+    <meta
+      name="keywords"
+      content="projetos, desenvolvimento, java, web, front-end, back-end, portfolio"
+    />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <meta property="og:title" content="Projetos | Lucas Maioli" />
+    <meta property="og:site_name" content="Lucas Maioli" />
+    <meta
+      property="og:description"
+      content="Explore os projetos desenvolvidos por Lucas Maioli."
+    />
+    <meta property="og:url" content="https://seusite.com/projetos.html" />
+    <meta property="og:image" content="https://seusite.com/og-img.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="Css/style.css" />
+    <title>Projetos | Lucas Paulista Maioli</title>
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h3>&lt;/LM&gt;</h3>
+      </div>
+      <nav class="desktop">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="about.html">Sobre</a></li>
+          <li><a href="projects.html">Projetos</a></li>
+          <li><a href="contact.html">Contato</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section class="projetos">
+        <h1 class="txt-azul">Meus Projetos</h1>
+
+        <div class="carrossel-projetos-container">
+          <button id="prevBtn" class="nav-btn">&lt;</button>
+
+          <div class="carrossel-viewport">
+            <div class="projetos-track">
+              <a href="#" class="projeto-card">
+                <img src="Assets/projetos.jpeg" alt="Preview do Projeto 1" />
+                <div class="card-texto">
+                  <h3>Nome do Projeto 1</h3>
+                </div>
+              </a>
+
+              <a href="#" class="projeto-card">
+                <img src="Assets/projetos.jpeg" alt="Preview do Projeto 1" />
+                <div class="card-texto">
+                  <h3>Nome do Projeto 2</h3>
+                </div>
+              </a>
+
+              <a href="#" class="projeto-card">
+                <img src="Assets/projetos.jpeg" alt="Preview do Projeto 1" />
+                <div class="card-texto">
+                  <h3>Nome do Projeto 3</h3>
+                </div>
+              </a>
+
+              <a href="#" class="projeto-card projeto-card-em-breve">
+                <div class="card-texto">
+                  <br>Mais projetos </br>em breve...</h3>
+                </div>
+              </a>
+            </div>
+          </div>
+
+          <button id="nextBtn" class="nav-btn">&gt;</button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; Todos os direitos reservados</p>
+      <p>Lucas Paulista Maioli</p>
+      <p>2025</p>
+    </footer>
+
+    <script src="Js/Script.js"></script>
+  </body>
+</html>

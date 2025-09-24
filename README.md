@@ -12,7 +12,7 @@ Pode visualizar o projeto em funcionamento no seguinte link:
 
 ## 📸 Preview
 
-![Preview da Página Inicial do Portfólio](assets/preview.png)
+![Preview da Página Inicial do Portfólio](assets/preview.jpeg)
 
 ---
 

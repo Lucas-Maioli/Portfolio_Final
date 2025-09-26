@@ -8,7 +8,7 @@
 
 Pode visualizar o projeto em funcionamento no seguinte link:
 
-[**lucasmaioli.tech**](https://lucas.maioli.online)
+[**lucasmaioli.online**](https://lucas.maioli.online)
 
 ## 📸 Preview
 

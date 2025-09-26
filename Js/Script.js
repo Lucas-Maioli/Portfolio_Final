@@ -65,9 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const cardMargin = 15;
       const cardWidth = cards[0].getBoundingClientRect().width + (cardMargin * 2);
       let currentProjectIndex = 0;
+      
+      
+      let itemsPerPage = window.innerWidth > 768 ? 3 : 1;
 
       function updateButtons() {
-        const itemsPerPage = 3; 
         prevButton.disabled = currentProjectIndex === 0;
         nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
       }
@@ -79,7 +81,6 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       nextButton.addEventListener('click', () => {
-        const itemsPerPage = 3;
         if (currentProjectIndex < cards.length - itemsPerPage) {
           moveToCard(currentProjectIndex + 1);
         }
@@ -91,7 +92,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
       
-      updateButtons();
+      
+      window.addEventListener('resize', () => {
+        itemsPerPage = window.innerWidth > 768 ? 3 : 1;
+        updateButtons(); 
+      });
+      
+      updateButtons(); 
     }
   }
 

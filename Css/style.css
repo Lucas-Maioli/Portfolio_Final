@@ -472,28 +472,47 @@ main.main-centralizado {
 /*   4. Responsividade (Media Queries)   */
 
 @media screen and (max-width: 768px) {
-  @media screen and (max-width: 768px) {
-    nav.desktop {
-      display: none;
-    }
-
-    .hamburger-menu {
-      display: block;
-    }
-
-    nav.mobile {
-      display: flex;
-    }
+  
+  nav.desktop {
+    display: none;
   }
 
+  .hamburger-menu {
+    display: block;
+  }
+
+  nav.mobile {
+    display: flex;
+  }
+
+  
+  .carrossel-nav,
+  div.carrossel-projetos-container button {
+    display: none;
+  }
+
+  
   main,
   main.sobre-container,
   .contato-container {
     flex-direction: column;
-    align-items: center;
-    text-align: center;
+    align-items: center; 
+    text-align: center;  
   }
 
+  
+  .texto-home {
+    display: block; 
+    text-align: center;
+    margin-top: 30px; 
+  }
+  
+  
+  .texto-home h2 {
+    text-indent: 0;
+  }
+
+  
   .texto-home h1,
   .secao-sobre h2 {
     font-size: 2rem;
@@ -503,6 +522,10 @@ main.main-centralizado {
   .texto-container {
     width: 90%;
     max-width: 400px;
+  }
+  
+  .carrossel-container {
+    margin-right: 0; 
   }
 
   .form-container,
@@ -519,11 +542,7 @@ main.main-centralizado {
   .carrossel-projetos-container {
     padding: 0;
   }
-
-  .nav-btn {
-    top: 35%;
-  }
-
+  
   .form-container button {
     margin-left: auto;
     margin-right: auto;

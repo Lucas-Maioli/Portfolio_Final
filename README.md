@@ -8,7 +8,7 @@
 
 Pode visualizar o projeto em funcionamento no seguinte link:
 
-[**lucasmaioli.tech**](https://)
+[**lucasmaioli.tech**](https://lucas.maioli.online)
 
 ## 📸 Preview
 
@@ -20,14 +20,14 @@ Pode visualizar o projeto em funcionamento no seguinte link:
 
 O projeto conta com as seguintes funcionalidades:
 
-* **Design Responsivo:** Layout adaptável para visualização em desktops, tablets e telemóveis.
-* **Múltiplas Páginas:** Estrutura organizada com 4 páginas principais (Início, Sobre, Projetos e Contacto).
-* **Componentes Dinâmicos em JavaScript:**
-    * Carrossel de imagens na página inicial com transição automática a cada 5 segundos.
-    * Carrossel de projetos com navegação manual.
-    * Menu de navegação que destaca a página ativa.
-* **Formulário de Contacto Funcional:** Integrado com o serviço [Formspree](https://formspree.io/) para envio de e-mails diretamente do site.
-* **Código Organizado:** CSS com variáveis (`:root`) para fácil manutenção e estrutura semântica no HTML.
+- **Design Responsivo:** Layout adaptável para visualização em desktops, tablets e telemóveis.
+- **Múltiplas Páginas:** Estrutura organizada com 4 páginas principais (Início, Sobre, Projetos e Contacto).
+- **Componentes Dinâmicos em JavaScript:**
+  - Carrossel de imagens na página inicial com transição automática a cada 5 segundos.
+  - Carrossel de projetos com navegação manual.
+  - Menu de navegação que destaca a página ativa.
+- **Formulário de Contacto Funcional:** Integrado com o serviço [Formspree](https://formspree.io/) para envio de e-mails diretamente do site.
+- **Código Organizado:** CSS com variáveis (`:root`) para fácil manutenção e estrutura semântica no HTML.
 
 ---
 
@@ -35,9 +35,9 @@ O projeto conta com as seguintes funcionalidades:
 
 As seguintes tecnologias foram utilizadas na construção do projeto:
 
-* **HTML5:** Estruturação semântica do conteúdo.
-* **CSS3:** Estilização, layout com Flexbox e Grid, e responsividade com Media Queries.
-* **JavaScript (Vanilla JS):** Manipulação do DOM para criar os componentes interativos.
+- **HTML5:** Estruturação semântica do conteúdo.
+- **CSS3:** Estilização, layout com Flexbox e Grid, e responsividade com Media Queries.
+- **JavaScript (Vanilla JS):** Manipulação do DOM para criar os componentes interativos.
 
 ---
 
@@ -63,3 +63,4 @@ LinkedIn: https://www.linkedin.com/in/lucas-maioli/
 
 📄 Licença
 Este projeto está sob a licença MIT. Veja o ficheiro LICENSE para mais detalhes.
+```

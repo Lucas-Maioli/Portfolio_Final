@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Híbrida Apenas em Responsivo)
+  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Versão Corrigida e Blindada)
   const carrosselProjetosContainer = document.querySelector('.carrossel-projetos-container');
   
   if (carrosselProjetosContainer) {
@@ -27,88 +27,73 @@ document.addEventListener("DOMContentLoaded", () => {
       let isDragging = false;
       let startX = 0;
 
-      function getCardWidth() {
-        return cards[0].getBoundingClientRect().width + 30; 
-      }
+      const getCardWidth = () => cards[0].getBoundingClientRect().width + 30;
 
-      function updateButtons() {
+      const updateButtons = () => {
         prevButton.disabled = currentProjectIndex === 0;
         nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
-      }
+      };
 
-      function moveToCard(targetIndex) {
+      const moveToCard = (targetIndex) => {
+        // Garante que o índice não saia dos limites
+        if (targetIndex < 0) targetIndex = 0;
+        if (targetIndex > cards.length - itemsPerPage) targetIndex = cards.length - itemsPerPage;
+
         const cardWidth = getCardWidth();
         track.style.transition = "transform 0.5s ease-in-out";
         track.style.transform = `translateX(-${targetIndex * cardWidth}px)`;
         currentProjectIndex = targetIndex;
         updateButtons();
-      }
+      };
 
-      // --- LÓGICA DE ARRASTAR (MOUSE E TOUCH) ---
       const startDrag = (e) => {
-        
         if (window.innerWidth > 768) return; 
-
         isDragging = true;
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        track.style.transition = "none";
-        
-        
-        track.style.cursor = "grabbing";
+        track.style.transition = "none"; // Remove transição para o rastro seguir o dedo/mouse
       };
 
       const endDrag = (e) => {
         if (!isDragging) return;
         isDragging = false;
-        track.style.cursor = "grab";
         
-        const endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].clientX;
+        // Pega a posição final (tratando mouseup e touchend)
+        const endX = e.type.includes('mouse') ? e.pageX : (e.changedTouches ? e.changedTouches[0].clientX : startX);
         const diff = startX - endX;
         const threshold = 50;
 
-        if (diff > threshold && currentProjectIndex < cards.length - itemsPerPage) {
+        if (diff > threshold) {
           moveToCard(currentProjectIndex + 1);
-        } else if (diff < -threshold && currentProjectIndex > 0) {
+        } else if (diff < -threshold) {
           moveToCard(currentProjectIndex - 1);
         } else {
-          moveToCard(currentProjectIndex);
+          moveToCard(currentProjectIndex); // Volta para o lugar se o movimento foi pequeno
         }
       };
 
-      
-      nextButton.addEventListener('click', () => {
-        if (currentProjectIndex < cards.length - itemsPerPage) moveToCard(currentProjectIndex + 1);
-      });
+      // Eventos de Botão
+      nextButton.addEventListener('click', () => moveToCard(currentProjectIndex + 1));
+      prevButton.addEventListener('click', () => moveToCard(currentProjectIndex - 1));
 
-      prevButton.addEventListener('click', () => {
-        if (currentProjectIndex > 0) moveToCard(currentProjectIndex - 1);
-      });
-
-      
+      // Eventos de Arraste
       track.addEventListener('mousedown', startDrag);
+      // Eventos no 'window' evitam que o carrossel trave se soltar o mouse fora dele
       window.addEventListener('mouseup', endDrag);
-
+      
       track.addEventListener('touchstart', startDrag, { passive: true });
       track.addEventListener('touchend', endDrag, { passive: true });
 
-      
+      // Ajuste de Redimensionamento
       window.addEventListener('resize', () => {
-        itemsPerPage = window.innerWidth > 768 ? 3 : 1;
-        
-        
-        if (window.innerWidth > 768) {
-          track.style.cursor = "default";
-        } else {
-          track.style.cursor = "grab";
+        const novoItemsPerPage = window.innerWidth > 768 ? 3 : 1;
+        if (novoItemsPerPage !== itemsPerPage) {
+          itemsPerPage = novoItemsPerPage;
+          currentProjectIndex = 0; // Reseta para o primeiro para evitar bugs de cálculo
         }
-        
-        moveToCard(currentProjectIndex); 
+        moveToCard(currentProjectIndex);
       });
 
-      
-      if (window.innerWidth <= 768) track.style.cursor = "grab";
-      
-      updateButtons(); 
+      updateButtons();
     }
   }
 

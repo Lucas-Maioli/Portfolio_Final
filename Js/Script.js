@@ -12,10 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Versão Corrigida e Blindada)
+  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Híbrida, Responsiva e Área Total)
   const carrosselProjetosContainer = document.querySelector('.carrossel-projetos-container');
   
   if (carrosselProjetosContainer) {
+    const viewport = document.querySelector('.carrossel-viewport');
     const track = document.querySelector('.projetos-track');
     const cards = Array.from(track.children);
     const nextButton = document.querySelector('#nextBtn');
@@ -27,15 +28,18 @@ document.addEventListener("DOMContentLoaded", () => {
       let isDragging = false;
       let startX = 0;
 
+      
       const getCardWidth = () => cards[0].getBoundingClientRect().width + 30;
 
       const updateButtons = () => {
-        prevButton.disabled = currentProjectIndex === 0;
-        nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
+        if (prevButton && nextButton) {
+          prevButton.disabled = currentProjectIndex === 0;
+          nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
+        }
       };
 
       const moveToCard = (targetIndex) => {
-        // Garante que o índice não saia dos limites
+        
         if (targetIndex < 0) targetIndex = 0;
         if (targetIndex > cards.length - itemsPerPage) targetIndex = cards.length - itemsPerPage;
 
@@ -46,53 +50,61 @@ document.addEventListener("DOMContentLoaded", () => {
         updateButtons();
       };
 
+      // --- LÓGICA DE MOVIMENTAÇÃO (DRAG & SWIPE) ---
       const startDrag = (e) => {
+        
         if (window.innerWidth > 768) return; 
+
         isDragging = true;
+        
         startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        track.style.transition = "none"; // Remove transição para o rastro seguir o dedo/mouse
+        track.style.transition = "none";
       };
 
       const endDrag = (e) => {
         if (!isDragging) return;
         isDragging = false;
         
-        // Pega a posição final (tratando mouseup e touchend)
+        
         const endX = e.type.includes('mouse') ? e.pageX : (e.changedTouches ? e.changedTouches[0].clientX : startX);
         const diff = startX - endX;
-        const threshold = 50;
+        const threshold = 50; 
 
         if (diff > threshold) {
           moveToCard(currentProjectIndex + 1);
         } else if (diff < -threshold) {
           moveToCard(currentProjectIndex - 1);
         } else {
-          moveToCard(currentProjectIndex); // Volta para o lugar se o movimento foi pequeno
+          moveToCard(currentProjectIndex); 
         }
       };
 
-      // Eventos de Botão
+      
+
+      
       nextButton.addEventListener('click', () => moveToCard(currentProjectIndex + 1));
       prevButton.addEventListener('click', () => moveToCard(currentProjectIndex - 1));
 
-      // Eventos de Arraste
-      track.addEventListener('mousedown', startDrag);
-      // Eventos no 'window' evitam que o carrossel trave se soltar o mouse fora dele
+      
+      viewport.addEventListener('mousedown', startDrag);
       window.addEventListener('mouseup', endDrag);
       
-      track.addEventListener('touchstart', startDrag, { passive: true });
-      track.addEventListener('touchend', endDrag, { passive: true });
+      
+      viewport.addEventListener('touchstart', startDrag, { passive: true });
+      viewport.addEventListener('touchend', endDrag, { passive: true });
 
-      // Ajuste de Redimensionamento
+      
       window.addEventListener('resize', () => {
         const novoItemsPerPage = window.innerWidth > 768 ? 3 : 1;
+        
         if (novoItemsPerPage !== itemsPerPage) {
           itemsPerPage = novoItemsPerPage;
-          currentProjectIndex = 0; // Reseta para o primeiro para evitar bugs de cálculo
-        }
+          currentProjectIndex = 0; 
+        
         moveToCard(currentProjectIndex);
       });
 
+      
       updateButtons();
     }
   }

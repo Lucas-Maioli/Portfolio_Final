@@ -289,6 +289,7 @@ main.sobre-container {
 .carrossel-viewport {
   width: 100%;
   overflow: hidden;
+  cursor: grab;
 }
 
 .projetos-track {
@@ -308,6 +309,7 @@ main.sobre-container {
   display: flex;
   flex-direction: column;
   min-height: 250px;
+  -webkit-user-drag: none;
 }
 
 .projeto-card:hover {
@@ -340,6 +342,10 @@ main.sobre-container {
 .projeto-card:last-child h3 {
   white-space: normal;
   overflow-wrap: break-word;
+}
+
+.projeto-card img, h3{
+  pointer-events: none;
 }
 
 .projeto-card-em-breve {

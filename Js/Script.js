@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Híbrida, Responsiva e Área Total)
+  // 3. LÓGICA DO CARROSSEL DE PROJETOS ( Híbrida, Responsiva e Área Total)
   const carrosselProjetosContainer = document.querySelector('.carrossel-projetos-container');
   
   if (carrosselProjetosContainer) {
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
         updateButtons();
       };
 
-      // --- LÓGICA DE MOVIMENTAÇÃO (DRAG & SWIPE) ---
+      
       const startDrag = (e) => {
         
         if (window.innerWidth > 768) return; 
@@ -85,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
       nextButton.addEventListener('click', () => moveToCard(currentProjectIndex + 1));
       prevButton.addEventListener('click', () => moveToCard(currentProjectIndex - 1));
 
-      
+     
       viewport.addEventListener('mousedown', startDrag);
       window.addEventListener('mouseup', endDrag);
       
@@ -100,6 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (novoItemsPerPage !== itemsPerPage) {
           itemsPerPage = novoItemsPerPage;
           currentProjectIndex = 0; 
+        }
         
         moveToCard(currentProjectIndex);
       });

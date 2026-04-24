@@ -547,4 +547,14 @@ main.main-centralizado {
     margin-left: auto;
     margin-right: auto;
   }
+
+  .projetos-track{
+    cursor: grab;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .projetos-track:active{
+    cursor: grabbing;
+  }
 }

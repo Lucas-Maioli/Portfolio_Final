@@ -12,131 +12,103 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // 2. LÓGICA DO CARROSSEL DE FOTOS (Só roda na Página Inicial)
-  const carrosselFotosContainer = document.querySelector(
-    ".carrossel-container",
-  );
-  if (carrosselFotosContainer) {
-    const navDots = document.querySelectorAll(".nav-dot");
-    const fotos = document.querySelectorAll(".foto-carrossel");
-    let currentIndex = 0;
-    let slideInterval;
-
-    function mostrarFoto(index) {
-      currentIndex = index;
-      fotos.forEach((foto) => foto.classList.remove("ativa"));
-      navDots.forEach((dot) => dot.classList.remove("ativa"));
-      fotos[currentIndex].classList.add("ativa");
-      navDots[currentIndex].classList.add("ativa");
-    }
-
-    function startSlideShow() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(() => {
-        let proximoIndex = currentIndex + 1;
-        if (proximoIndex >= fotos.length) {
-          proximoIndex = 0;
-        }
-        mostrarFoto(proximoIndex);
-      }, 5000);
-    }
-
-    navDots.forEach((dot) => {
-      dot.addEventListener("click", () => {
-        const index = parseInt(dot.getAttribute("data-index"));
-        mostrarFoto(index);
-        startSlideShow();
-      });
-    });
-
-    mostrarFoto(0);
-    startSlideShow();
-  }
-
-  // 3. LÓGICA DO CARROSSEL DE PROJETOS
-  const carrosselProjetosContainer = document.querySelector(
-    ".carrossel-projetos-container",
-  );
-
+  // 3. LÓGICA DO CARROSSEL DE PROJETOS (Híbrida Apenas em Responsivo)
+  const carrosselProjetosContainer = document.querySelector('.carrossel-projetos-container');
+  
   if (carrosselProjetosContainer) {
-    const track = document.querySelector(".projetos-track");
+    const track = document.querySelector('.projetos-track');
     const cards = Array.from(track.children);
-    const nextButton = document.querySelector("#nextBtn");
-    const prevButton = document.querySelector("#prevBtn");
-
+    const nextButton = document.querySelector('#nextBtn');
+    const prevButton = document.querySelector('#prevBtn');
+    
     if (cards.length > 0) {
       let currentProjectIndex = 0;
       let itemsPerPage = window.innerWidth > 768 ? 3 : 1;
-
-      let touchStartX = 0;
-      let touchEndX = 0;
+      let isDragging = false;
+      let startX = 0;
 
       function getCardWidth() {
-        return cards[0].getBoundingClientRect().width + 30;
+        return cards[0].getBoundingClientRect().width + 30; 
       }
 
       function updateButtons() {
         prevButton.disabled = currentProjectIndex === 0;
-        nextButton.disabled =
-          currentProjectIndex >= cards.length - itemsPerPage;
+        nextButton.disabled = currentProjectIndex >= cards.length - itemsPerPage;
       }
 
       function moveToCard(targetIndex) {
         const cardWidth = getCardWidth();
+        track.style.transition = "transform 0.5s ease-in-out";
         track.style.transform = `translateX(-${targetIndex * cardWidth}px)`;
         currentProjectIndex = targetIndex;
         updateButtons();
       }
 
-      nextButton.addEventListener("click", () => {
-        if (currentProjectIndex < cards.length - itemsPerPage) {
+      // --- LÓGICA DE ARRASTAR (MOUSE E TOUCH) ---
+      const startDrag = (e) => {
+        
+        if (window.innerWidth > 768) return; 
+
+        isDragging = true;
+        startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+        track.style.transition = "none";
+        
+        
+        track.style.cursor = "grabbing";
+      };
+
+      const endDrag = (e) => {
+        if (!isDragging) return;
+        isDragging = false;
+        track.style.cursor = "grab";
+        
+        const endX = e.type.includes('mouse') ? e.pageX : e.changedTouches[0].clientX;
+        const diff = startX - endX;
+        const threshold = 50;
+
+        if (diff > threshold && currentProjectIndex < cards.length - itemsPerPage) {
           moveToCard(currentProjectIndex + 1);
-        }
-      });
-
-      prevButton.addEventListener("click", () => {
-        if (currentProjectIndex > 0) {
+        } else if (diff < -threshold && currentProjectIndex > 0) {
           moveToCard(currentProjectIndex - 1);
+        } else {
+          moveToCard(currentProjectIndex);
         }
+      };
+
+      
+      nextButton.addEventListener('click', () => {
+        if (currentProjectIndex < cards.length - itemsPerPage) moveToCard(currentProjectIndex + 1);
       });
 
-      window.addEventListener("resize", () => {
+      prevButton.addEventListener('click', () => {
+        if (currentProjectIndex > 0) moveToCard(currentProjectIndex - 1);
+      });
+
+      
+      track.addEventListener('mousedown', startDrag);
+      window.addEventListener('mouseup', endDrag);
+
+      track.addEventListener('touchstart', startDrag, { passive: true });
+      track.addEventListener('touchend', endDrag, { passive: true });
+
+      
+      window.addEventListener('resize', () => {
         itemsPerPage = window.innerWidth > 768 ? 3 : 1;
-
-        moveToCard(currentProjectIndex);
+        
+        
+        if (window.innerWidth > 768) {
+          track.style.cursor = "default";
+        } else {
+          track.style.cursor = "grab";
+        }
+        
+        moveToCard(currentProjectIndex); 
       });
 
-      track.addEventListener(
-        "touchstart",
-        (e) => {
-          touchStartX = e.changedTouches[0].screenX;
-        },
-        { passive: true },
-      );
-
-      track.addEventListener(
-        "touchend",
-        (e) => {
-          touchEndX = e.changedTouches[0].screenX;
-          handleSwipe();
-        },
-        { passive: true },
-      );
-
-      function handleSwipe() {
-        const swipeThreshold = 50;
-        if (touchStartX - touchEndX > swipeThreshold) {
-          if (currentProjectIndex < cards.length - itemsPerPage) {
-            moveToCard(currentProjectIndex + 1);
-          }
-        } else if (touchEndX - touchStartX > swipeThreshold) {
-          if (currentProjectIndex > 0) {
-            moveToCard(currentProjectIndex - 1);
-          }
-        }
-      }
-
-      updateButtons();
+      
+      if (window.innerWidth <= 768) track.style.cursor = "grab";
+      
+      updateButtons(); 
     }
   }
 
